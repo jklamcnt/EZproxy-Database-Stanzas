@@ -1,0 +1,28 @@
+# Resource: Reaxys
+# URL: https://new.reaxys.com/
+# Updated: 2017-06-19
+# OCLC URL: https://www.oclc.org/support/services/ezproxy/documentation/db/reaxys.en.html
+# OCLC Updated: 2017-04-06
+
+# OCLC's database definition results in a blank page shortly after login.
+# This is due to EZproxy blocking an request AJAX to "https://new-be.reaxys.com/services/user",
+# as these are made without passing along the EZproxy session cookie.
+# Solution is to exclude "new-be.reaxys.com" from being proxied by EZproxy with the statement
+# "NeverProxy new-be.reaxys.com".
+
+NeverProxy new-be.reaxys.com
+TITLE Reaxys 2.0
+URL https://new.reaxys.com/
+HOSTJ www.reaxys.com
+HOSTJ https://www.reaxys.com
+HOSTJ new.reaxys.com
+HOSTJ https://new.reaxys.com
+HOSTJ sc.elsevier.com
+HOSTJ https://sc.elsevier.com
+DOMAINJ reaxys.com
+DOMAINJ elsevier.com
+DOMAINJ dx.doi.org
+FIND .replace("OLD_EXTERNAL_URL","NEW_EXTERNAL_URL")
+REPLACE .replace("linksolver.ovid.com","^plinksolver.ovid.com^").replace("sc.elsevier.com","^psc.elsevier.com^")
+FIND window.open(response)
+REPLACE window.open(response.replace('linksolver.ovid.com', '^plinksolver.ovid.com^').replace('sc.elsevier.com', '^psc.elsevier.com^'))
